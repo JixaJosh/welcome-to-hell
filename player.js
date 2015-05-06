@@ -1,6 +1,6 @@
 var Player = function()
 {
-      this.position = new Vector2(9,0);
+      this.position = new Vector2();
       this.image = document.createElement("img");
       this.position.set( 9*TILE, 0*TILE );
 
