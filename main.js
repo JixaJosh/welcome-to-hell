@@ -40,135 +40,150 @@ var fps = 0;
 var fpsCount = 0;
 var fpsTime = 0;
 
-var BULLET_SPEED = 1.5;
-var enemy = new Enemy();
-var Vector2 = new Vector2();
+// load an image to draw
+//var chuckNorris = document.createElement("img");
+//chuckNorris.src = "hero.png";
+
 var player = new Player();
 var keyboard = new Keyboard();
-var Player = function(){};
 
-// abitrarychoice for 1m
-var METER = TILE;
-// very exaggerated gravity (6x)
-var GRAVITY = METER * 9.8 * 6;
-// max horizontal speed (10 tiles per second)
-var MAXDX = METER * 10; 
-// max vertical speed   (15 tiles per second)
-var MAXDY = METER * 15;
-// horizontal acceleration -take 1/2 second to reach maxdx
-var ACCEL = MAXDX * 2;
-// horizontal friction -take 1/6 second to stop from maxdx
-var FRICTION = MAXDX * 6;
-// (a large) instantaneous jump impulse
-var JUMP = METER * 1500;
+var LAYER_COUNT = 2;
+ // number of layers in level
 
-var LAYER_COUNT = 3;
-var MAP = { tw: 60, th: 15 };
+var MAP = {tw:19, th:14}; 
+// specifies size of the level. (tiles wide  x  tiles high)
+
 var TILE = 35;
-var TILESET_TILE = TILE * 2;
-var TILESET_PADDING = 2;
-var TILESET_SPACING = 2;
-var TILESET_COUNT_X = 14;
-var TILESET_COUNT_Y = 14;
+ // the width/height of each tile in pixels our pics are different?
 
-var LAYER_COUNT = 3;
-var LAYER_BACKGOUND = 0;
+var TILESET_TILE = TILE*2;
+// The width/height of a tile in the tileset. Because the images are twice as big as 
+// the grid in our map we need to be careful (but it allows us a bit more flexibility when designing the level)
+
+var TILESET_PADDING = 0; 
+//How many pixels are between the image border and the tile images in the tilemap
+
+var TILESET_SPACING = 0; 
+//how many pixels are between tile images in the tilemap
+
+var TILESET_COUNT_X = 14; 
+//How many columns of tile images are in the tileset
+
+var TILESET_COUNT_Y = 14; 
+//How many rows of tile images are in the tileset
+
+// variables to map the layers in our level
+var LAYER_BACKGROUND = 0;
 var LAYER_PLATFORMS = 1;
 var LAYER_LADDERS = 2;
 
-// load the image to use for the level tiles
+// arbitrary choice for 1m
+var METER = TILE;
+ // very exaggerated gravity (6x)
+var GRAVITY = METER * 9.8 * 6;
+ // max horizontal speed (10 tiles per second)
+var MAXDX = METER * 10;
+ // max vertical speed (15 tiles per second)
+var MAXDY = METER * 15;
+ // horizontal acceleration - take 1/2 second to reach maxdx
+var ACCEL = MAXDX * 2;
+ // horizontal friction - take 1/6 second to stop from maxdx
+var FRICTION = MAXDX * 6;
+ // (a large) instantaneous jump impulse
+var JUMP = METER * 1500;
+
+
 var tileset = document.createElement("img");
-   tileset.src = "tileset.png";
+tileset.src = "tileset hell.png";
 
-function cellAtPixelCoord(layer, x,y)   
+
+function cellAtTileCoord(layer, tx, ty)
 {
-       if(x<0 || x>SCREEN_WIDTH || y<0)
-              return 1;
-       // let the player drop of the bottom of the screen (this means death)
-       if(y>SCREEN_HEIGHT)
-                return 0;
-       return cellAtTileCoord(layer, p2t(x), p2t(y));    
+	if( tx < 0 || tx >= MAP.tw || ty < 0 )
+		return 1;
+	// lets the player drop off the bottom of the screen also means death to chuck
+	if(ty >= MAP.th)
+		return 0;
+	return cells[layer][ty][tx];
 };
 
-function cellAtTileCoord(layer, tx, ty) 
-{ 
-          if(tx<0 || tx>=MAP.tw || ty<0)
-                  return 1;
-           // let the player drop of the bottom of the screen (this means death)
-           if(ty>=MAP.th)
-                  return 0;
-           return cells[layer][ty][tx]; 
+function tileToPixel (tile)
+{
+	return tile * TILE;
 };
 
-function tileToPixel(tile) 
+function pixelToTile (pixel)
 {
-       return tile * TILE;
-};
-
-function pixelToTile(pixel) 
-{
-       return Math.floor(pixel/TILE); 
+	return Math.floor(pixel/TILE);
 };
 
 function bound(value, min, max)
 {
-       if(value < min)
-             return min;
-       if(value > max)
-             return max;
-       return value;
+	if(value < min)
+		return min;
+	if(value > max)
+		return max;
+	return value;
 }
+
+
 
 function drawMap()
 {
-   for(var layerIdx = 0; layerIdx<LAYER_COUNT; layerIdx ++ )
-   {
-       var idx = 0;
-       for( var y=0; y < level1.layers[layerIdx].height; y++ ) 
-       {
-           for( var x=0; x < level1.layers[layerIdx].width; x++ ) 
-           {
-                 if( level1.layers[layerIdx].data[idx] != 0 )
-                 {
-// the tiles in the Tiled map are base 1 (meaning a value of 0 means no tile), so subtract one from the tilesetid to get the
-// correct tile
-                   var tileIndex = level1.layers[layerIdx].data[idx]-1;
-                   var sx = TILESET_PADDING + (tileIndex % TILESET_COUNT_X) * (TILESET_TILE + TILESET_SPACING);
-                   var sy = TILESET_PADDING + (Math.floor(tileIndex/ TILESET_COUNT_Y)) * (TILESET_TILE + TILESET_SPACING);
-                   context.drawImage(tileset, sx, sy, TILESET_TILE, TILESET_TILE, x * TILE, (y - 1) * TILE, TILESET_TILE, TILESET_TILE);
-                  }
-                  idx ++ ;
-            }
-        }
-    }
+	for(var layerIdx=0; layerIdx<LAYER_COUNT; layerIdx++)
+	{
+		var idx = 0;
+		for( var y = 0; y < level1.layers[layerIdx].height; y++ )
+		{
+			for( var x = 0; x < level1.layers[layerIdx].width; x++ )
+			
+			{
+				if( level1.layers[layerIdx].data[idx] != 0 )
+				{
+					// the tiles in the Tiled map are base 1 (meaning a value of 0 means no tile), so subtract one from the tileset id to get the
+					// correct tile
+					var tileIndex = level1.layers[layerIdx].data[idx] - 1;
+					var sx = TILESET_PADDING + (tileIndex % TILESET_COUNT_X) * (TILESET_TILE + TILESET_SPACING);
+					var sy = TILESET_PADDING + (Math.floor(tileIndex / TILESET_COUNT_Y)) * (TILESET_TILE + TILESET_SPACING);
+					context.drawImage(tileset, sx, sy, TILESET_TILE, TILESET_TILE, x*TILE, (y-1)*TILE, TILESET_TILE, TILESET_TILE);
+				}
+			idx++;
+		}
+	}
+}
 }
 
-var cells = [];                 // the array that holds our simplified collision data
-function initialize() {     
-      for(var layerIdx = 0; layerIdx < LAYER_COUNT; layerIdx++) {
-                                // initialize the collision map
-          cells[layerIdx] = [];    
-          var idx = 0;    
-          for(var y = 0; y < level1.layers[layerIdx].height; y++) {        
-              cells[layerIdx][y] = [];
-              for(var x = 0; x < level1.layers[layerIdx].width; x++) {
-                 if(level1.layers[layerIdx].data[idx] != 0) {
-                        // for each tile we find in the layer data, we need to create 4 collisions
-                        // (because our collision squares are 35x35 but the tile in the 
-                        // level are 70x70)
-                   cells[layerIdx][y][x] = 1;  
-                   cells[layerIdx][y-1][x] = 1;    
-                   cells[layerIdx][y-1][x+1] = 1;  
-                   cells[layerIdx][y][x+1] = 1;    
-                }               
-                else if(cells[layerIdx][y][x] != 1) {
-                        // if we haven't set this cell's value, then set it to 0 now
-                    cells[layerIdx][y][x] = 0;                     
-                }
-                idx++;
-            }
-        }   
-    }
+var cells = []; // array that holds a simplified collission data
+
+function initialize()
+{
+	for(var layerIdx = 0; layerIdx < LAYER_COUNT; layerIdx++) // initializes the collision map
+	{
+		cells[layerIdx] = [];
+		var idx = 0;
+		for(var y = 0; y < level1.layers[layerIdx].height; y++)
+		{
+			cells[layerIdx][y] = [];
+			for(var x = 0; x < level1.layers[layerIdx].width; x++)
+			{
+				if(level1.layers[layerIdx].data[idx] != 0)
+					// for each tile we find in the layer data, we need to create 4 collisions
+ 					// (because our collision squares are 35x35 but the tile in the
+					// level are 70x70)
+				{
+					cells[layerIdx][y][x] = 1;
+					cells[layerIdx][y-1][x] = 1;
+					cells[layerIdx][y-1][x+1] = 1;
+					cells[layerIdx][y][x+1] = 1;
+				}
+				else if(cells[layerIdx][y][x] != 1)
+					{
+						cells[layerIdx][y][x] = 0;
+					}
+			idx++;
+			}
+		}
+	}
 }
 
 function run()
@@ -177,15 +192,15 @@ function run()
 	context.fillRect(0, 0, canvas.width, canvas.height);
 	
 	var deltaTime = getDeltaTime();
-
+	
 	drawMap();
 	
 	player.update(deltaTime);
-    player.draw();
-		
-	enemy.update(deltaTime);
-	enemy.draw();
+	player.draw();
 
+	//context.drawImage(chuckNorris, SCREEN_WIDTH/2 - chuckNorris.width/2, SCREEN_HEIGHT/2 - chuckNorris.height/2);
+	
+		
 	// update the frame counter 
 	fpsTime += deltaTime;
 	fpsCount++;
@@ -201,6 +216,7 @@ function run()
 	context.font="14px Arial";
 	context.fillText("FPS: " + fps, 5, 20, 100);
 }
+
 
 initialize();
 
