@@ -166,6 +166,6 @@ Player.prototype.draw= function()
 	context.save();
 	context.translate(this.x, this.y);
 	//context.rotate(this.rotation);
-	context.drawImage(this.image, this.position.y , this.position.x);
+	context.drawImage(this.image, this.position.x , this.position.y);
 	context.restore();
 	}
