@@ -125,7 +125,7 @@ if (left)
 	 if(this.direction == LEFT)
           this.sprite.setAnimation(ANIM_JUMP_LEFT)
      else
-          this.sprite.setAnimation(ANIM_JUMP_RIGHT
+          this.sprite.setAnimation(ANIM_JUMP_RIGHT)
 	 }
 
 
