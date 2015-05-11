@@ -18,7 +18,7 @@ this.falling = true;
 
 
 
-this.image.src= "ancient.png";
+this.image.src= "hero.png";
 };
 
 

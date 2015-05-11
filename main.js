@@ -94,7 +94,7 @@ var JUMP = METER * 1500;
 
 
 var tileset = document.createElement("img");
-tileset.src = "tileset hell.png";
+tileset.src = "tileset.png";
 
 
 function cellAtTileCoord(layer, tx, ty)
