@@ -10,6 +10,8 @@ this.sprite.buildAnimation(12, 8, 165, 126, 0.05,
 this.sprite.buildAnimation(12, 8, 165, 126, 0.05, 
            [52, 53, 54,55, 56, 57, 58, 59]);
 this.sprite.buildAnimation(12, 8, 165, 126, 0.05, 
+           [52, 53, 54,55, 56, 57, 58, 59]);
+this.sprite.buildAnimation(12, 8, 165, 126, 0.05, 
            [60, 61, 62, 63, 64]);
 this.sprite.buildAnimation(12, 8, 165, 126, 0.05,
            [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78]);
@@ -43,7 +45,7 @@ var ANIM_IDLE_RIGHT = 5;
 var ANIM_JUMP_RIGHT = 6;
 var ANIM_WALK_RIGHT = 7;
 var ANIM_SHOOT_RIGHT = 8;
-var ANIM_MAX = 6;
+var ANIM_MAX = 7;
 
 
 Player.prototype.update= function(deltaTime)
@@ -225,6 +227,5 @@ Player.prototype.draw= function()
 	context.save();
 	context.translate(this.x, this.y);
 	//context.rotate(this.rotation);
-	context.drawImage(this.image, this.position.x , this.position.y);
 	context.restore();
 }
