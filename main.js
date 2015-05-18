@@ -3,6 +3,7 @@ var context = canvas.getContext("2d");
 
 var startFrameMillis = Date.now();
 var endFrameMillis = Date.now();
+var heartImage = ("heartImage.png") 
 
 // This function will return the time in seconds since the function 
 // was last called
@@ -181,11 +182,12 @@ var offsetX = TILE + Math.floor(player.position.x%TILE);
 }
 
 }
-
-var cells = []; // array that holds a simplified collission data
+}
+// array that holds a simplified collission data
 var musicBackground;
 var sfxFire;
-}
+var cells = [];
+
 function initialize()
 {
 	for(var layerIdx = 0; layerIdx < LAYER_COUNT; layerIdx++) // initializes the collision map

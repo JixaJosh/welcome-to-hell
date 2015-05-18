@@ -260,12 +260,8 @@ Player.prototype.update= function(deltaTime)
 
 Player.prototype.draw= function()
 {
-		context.drawImage(this.image, 
-			              this.position.x - worldOffsetX, this.position.y);
-}
 
-	{
-    this.sprite.draw(context, this.position.x, this.position.y)	
+    this.sprite.draw(context, this.position.x - worldOffsetX, this.position.y);	
 
 	context.save();
 	context.translate(this.x, this.y);
