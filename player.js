@@ -75,6 +75,8 @@ Player.prototype.update= function(deltaTime)
 
 this.sprite.update(deltaTime);
 
+}
+
 if(keyboard.isKeyDown(keyboard.KEY_LEFT) == true) {
        left = true;
        this.direction = LEFT;
@@ -251,7 +253,7 @@ if (this.velocity.y > 0)
 			this.velocity.x = 0;    // stops horizontal velocity
 		}
 	}
-}
+
 Player.prototype.draw= function()
 {
 		context.drawImage(this.image, 
