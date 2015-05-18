@@ -37,6 +37,8 @@ this.jumping = false;
 this.falling = true;
 
 this.direction = LEFT;
+
+this.cooldownTimer = 0;
 };
 
 var LEFT = 0;
@@ -53,7 +55,22 @@ var ANIM_SHOOT_RIGHT = 8;
 var ANIM_MAX = 9;
 
 
+
 Player.prototype.update= function(deltaTime)
+
+
+
+{
+       if(keyboard.isKeyDown(keyboard.KEY_LEFT) == true)
+       {
+                 this.x -= PLAYER_SPEED * deltaTime;
+       }
+        if(keyboard.isKeyDown(keyboard.KEY_RIGHT) == true)
+       {
+                 this.x += PLAYER_SPEED * deltaTime;
+       }
+}
+
 {
 
 this.sprite.update(deltaTime);
@@ -102,9 +119,19 @@ if(keyboard.isKeyDown(keyboard.KEY_RIGHT) == true)
 	right = true;
 }
 
-if(keyboard.isKeyDown(keyboard.KEY_SPACE) == true)
-{
+if(keyboard.isKeyDown(keyboard.KEY_UP) == true) {
 	jump = true;
+}
+if(this.cooldownTimer > 0)
+{
+         this.cooldownTimer -= deltaTime;
+}
+
+if(keyboard.isKeyDown(keyboard.KEY_SPACE) == true && this.cooldownTimer <= 0) {
+        sfxFire.play();
+        this.cooldownTimer = 0.3;
+       
+        // Shoot a bullet
 }
 
 var wasleft = this.velocity.x < 0;
@@ -226,6 +253,11 @@ if (this.velocity.y > 0)
 	}
 }
 Player.prototype.draw= function()
+{
+		context.drawImage(this.image, 
+			              this.position.x - worldOffsetX, this.position.y);
+}
+
 	{
     this.sprite.draw(context, this.position.x, this.position.y)	
 
