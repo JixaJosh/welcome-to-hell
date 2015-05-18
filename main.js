@@ -132,7 +132,7 @@ function bound(value, min, max)
 
 
 function drawMap()
-
+{
 var startX = -1;
 var maxTiles = Math.floor(SCREEN_WIDTH / TILE) + 2;
 var tileX = pixelToTile(player.position.x);
@@ -185,7 +185,7 @@ var offsetX = TILE + Math.floor(player.position.x%TILE);
 var cells = []; // array that holds a simplified collission data
 var musicBackground;
 var sfxFire;
-
+}
 function initialize()
 {
 	for(var layerIdx = 0; layerIdx < LAYER_COUNT; layerIdx++) // initializes the collision map
