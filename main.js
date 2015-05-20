@@ -185,56 +185,12 @@ var offsetX = TILE + Math.floor(player.position.x%TILE);
 var musicBackground;
 var sfxFire;
 var bullets = [];
-var BULLET_SPEED = 1.5;
 var cells = [];
 
 function initialize()
 {
 	
-    {
-         var bullet = 
-         {
-            image: document.createElement("img"),
-            x: player.x,
-            y: player.y,
-            width: 5,
-            height: 5,
-            velocityX: 0,
-            velocityY: 0
-         };
-
-      
-	  // start off with a velocity that shoots the bullet straight up
-      var velX = 0;
-      var velY = 1;
-
-	  // now rotate this vector acording to the ship's current rotation
-      var s = Math.sin(player.rotation);
-      var c = Math.cos(player.rotation);
-
-	  // for an explanation of this formula,
-      // see http://en.wikipedia.org/wiki/Rotation_matrix
-      var xVel = (velX * c) - (velY * s);
-      var yVel = (velX * s) + (velY * c);
-
-	  // dont bother storing a direction and calculating the
-      // velocity every frame, because it won't change.
-      // Just store the pre-calculated velocity
-      bullet.velocityX = xVel * BULLET_SPEED;
-      bullet.velocityY = yVel * BULLET_SPEED;
-	  
-	  // finally, add the bullet to the bullets array
-      bullets.push(bullet);
-
-	  // don't forget to set the bullet's position
-      bullet.x = player.x;
-      bullet.y = player.y;
-   }
-
-
-
-
-
+    
 	for(var layerIdx = 0; layerIdx < LAYER_COUNT; layerIdx++) // initializes the collision map
 	{
 		cells[layerIdx] = [];
@@ -344,7 +300,7 @@ function run()
 		fps = fpsCount;
 		fpsCount = 0;
 	}		
-		
+	
 	// draw the FPS
 	context.fillStyle = "#f00";
 	context.font="14px Arial";
