@@ -3,8 +3,6 @@ var context = canvas.getContext("2d");
 
 var startFrameMillis = Date.now();
 var endFrameMillis = Date.now();
-var heartImage = document.createElement("img");
-heartImage.src = "heartImage.png";
 
 // This function will return the time in seconds since the function 
 // was last called
@@ -78,9 +76,8 @@ var TILESET_COUNT_Y = 14;
 //How many rows of tile images are in the tileset
 
 // variables to map the layers in our level
-var LAYER_BACKGROUND = 0;
-var LAYER_PLATFORMS = 1;
-var LAYER_LADDERS = 2;
+var LAYER_PLATFORMS = 0;
+var LAYER_LADDERS = 1;
 
 // arbitrary choice for 1m
 var METER = TILE;
@@ -254,17 +251,42 @@ function run()
 
 	//context.drawImage(chuckNorris, SCREEN_WIDTH/2 - chuckNorris.width/2, SCREEN_HEIGHT/2 - chuckNorris.height/2);
 	
+     var hit=false;
+     for(var i=0; i<bullets.length; i++)
+{
+            bullets[i].update(deltaTime);
+            if( bullets[i].position.x - worldOffsetX < 0 ||
+                   bullets[i].position.x - worldOffsetX > SCREEN_WIDTH)
+            {
+                   hit = true;
+            }
+      for(var j=0; j<enemies.length; j++)
+   {
+            if(intersects( bullets[i].position.x, bullets[i].position.y, TILE, TILE,
+                  enemies[j].position.x, enemies[j].position.y, TILE, TILE) == true)
+       {
+                    // kill both the bullet and the enemy
+                    enemies.splice(j, 1);
+                    hit = true;
+                   
+                   // increment the player score
+                    score += 1;
+                    break;
+        }
+   }
+   if(hit == true) 
+   {
+          bullets.splice(i, 1);
+          break;
+   }
+}
+
 	// score
      context.fillStyle = "black";
      context.font="32px Arial";
      var scoreText = "Score: " + score;
      context.fillText(scoreText, SCREEN_WIDTH -170, 35);
 
-     // life counter
-    for(var i=0; i<lives; i++)
-  {
-          context.drawImage(heartImage, 20 + ((heartImage.width+2)*i), 10);
-  }
 		
 	// update the frame counter 
 	fpsTime += deltaTime;
