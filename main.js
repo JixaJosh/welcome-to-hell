@@ -55,7 +55,7 @@ var keyboard = new Keyboard();
 var LAYER_COUNT = 2;
  // number of layers in level
 
-var MAP = {tw:19, th:14}; 
+var MAP = {tw:60, th:15}; 
 // specifies size of the level. (tiles wide  x  tiles high)
 
 var TILE = 35;
@@ -65,10 +65,10 @@ var TILESET_TILE = TILE*2;
 // The width/height of a tile in the tileset. Because the images are twice as big as 
 // the grid in our map we need to be careful (but it allows us a bit more flexibility when designing the level)
 
-var TILESET_PADDING = 0; 
+var TILESET_PADDING = 2; 
 //How many pixels are between the image border and the tile images in the tilemap
 
-var TILESET_SPACING = 0; 
+var TILESET_SPACING = 2; 
 //how many pixels are between tile images in the tilemap
 
 var TILESET_COUNT_X = 14; 
