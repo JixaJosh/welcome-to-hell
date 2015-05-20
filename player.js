@@ -58,17 +58,6 @@ var ANIM_MAX = 9;
 
 Player.prototype.update= function(deltaTime)
 {
-  
-  {
-        if(keyboard.isKeyDown(keyboard.KEY_LEFT) == true)
-       {
-                 this.x -= PLAYER_SPEED * deltaTime;
-       }
-        if(keyboard.isKeyDown(keyboard.KEY_RIGHT) == true)
-       {
-                 this.x += PLAYER_SPEED * deltaTime;
-       }
-   }
    
   {
 

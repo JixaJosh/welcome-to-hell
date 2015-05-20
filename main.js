@@ -3,7 +3,8 @@ var context = canvas.getContext("2d");
 
 var startFrameMillis = Date.now();
 var endFrameMillis = Date.now();
-var heartImage = ("heartImage.png");
+var heartImage = document.createElement("img");
+heartImage.src = "heartImage.png";
 
 // This function will return the time in seconds since the function 
 // was last called
