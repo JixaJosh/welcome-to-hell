@@ -251,13 +251,13 @@ function run()
 	
 	drawMap();
 	player.draw();
-	bullets[i].draw();
-
+	
 	//context.drawImage(chuckNorris, SCREEN_WIDTH/2 - chuckNorris.width/2, SCREEN_HEIGHT/2 - chuckNorris.height/2);
 	
      var hit=false;
      for(var i=0; i<bullets.length; i++)
 {
+	        bullets[i].draw();
             bullets[i].update(deltaTime);
             if( bullets[i].position.x - worldOffsetX < 0 ||
                    bullets[i].position.x - worldOffsetX > SCREEN_WIDTH)
