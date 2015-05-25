@@ -251,6 +251,7 @@ function run()
 	
 	drawMap();
 	player.draw();
+	bullets[i].draw();
 
 	//context.drawImage(chuckNorris, SCREEN_WIDTH/2 - chuckNorris.width/2, SCREEN_HEIGHT/2 - chuckNorris.height/2);
 	
