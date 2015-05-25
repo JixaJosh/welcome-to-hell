@@ -125,7 +125,7 @@ Player.prototype.update= function(deltaTime)
         this.cooldownTimer = 0.3;
        
        var tempBullet = new Bullet(this.position.x, this.position.y, this.direction);
-       bullets.push
+       bullets.push(tempBullet)
         // Shoot a bullet
   }
 
