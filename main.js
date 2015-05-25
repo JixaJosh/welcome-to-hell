@@ -74,11 +74,14 @@ var TILESET_COUNT_X = 14;
 
 var TILESET_COUNT_Y = 14; 
 //How many rows of tile images are in the tileset
-
+var ENEMY_MAXDX = METER * 5; 
+var ENEMY_ACCEL = ENEMY_MAXDX * 2;
 // variables to map the layers in our level
 var LAYER_PLATFORMS = 0;
 var LAYER_LADDERS = 1;
 
+var LAYER_OBJECT_ENEMIES = 2;
+var LAYER_OBJECT_TRIGGERS = 3;
 // arbitrary choice for 1m
 var METER = TILE;
  // very exaggerated gravity (6x)
@@ -186,11 +189,29 @@ var musicBackground;
 var sfxFire;
 var bullets = [];
 var cells = [];
+var enemies = [];
 
 function initialize()
 {
-	
+	// add enemies
+    idx = 0;
+    for(var y = 0; y < level1.layers[LAYER_OBJECT_ENEMIES].height; y++) 
+    {        
+            for(var x = 0; x < level1.layers[LAYER_OBJECT_ENEMIES].width; x++) 
+            {
+                     if(level1.layers[LAYER_OBJECT_ENEMIES].data[idx] != 0) 
+                     {
+                            var px = tileToPixel(x);
+                            var py = tileToPixel(y);
+                            var e = new Enemy(px, py);
+                            enemies.push(e);
+                      }
+                       idx++;
+            }
+    }  
     
+	
+
 	for(var layerIdx = 0; layerIdx < LAYER_COUNT; layerIdx++) // initializes the collision map
 	{
 		cells[layerIdx] = [];
@@ -252,6 +273,17 @@ function run()
 	drawMap();
 	player.draw();
 	
+	for(var i=0; i<enemies.length; i++)
+         {
+                enemies[i].update(deltaTime);
+         }
+
+    for(var i=0; i<enemies.length; i++)
+         {
+                enemies[i].draw(deltaTime);
+         }
+
+
 	//context.drawImage(chuckNorris, SCREEN_WIDTH/2 - chuckNorris.width/2, SCREEN_HEIGHT/2 - chuckNorris.height/2);
 	
      var hit=false;

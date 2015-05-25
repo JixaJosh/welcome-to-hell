@@ -5,12 +5,17 @@
  </tileset>
  <layer name="Tile Layer 1" width="20" height="15">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFAwlYoDTzgLoC4Q4mHDS93MeIZC8yGxdNb/cNd4ArzAdL+AIAYzQALg==
+   eJxjYBgFo4AwYELjM0JpZjq7Y6DsxQWo5R5GwkroAmDuYEKj8fkPWQ8x6ikBACnEACA=
   </data>
  </layer>
  <layer name="Tile Layer 2" width="20" height="15">
   <data encoding="base64" compression="zlib">
-   eJxjYBgF5IBNA+0AAmCou2+g3U8r9y0lUx+p9pPrPiYy9YEAI5oZzBSYhQsAAJ3tBj4=
+   eJxjYBgFo2AU0AssHWgHEABMA+0AAgAA1DAAqA==
+  </data>
+ </layer>
+ <layer name="enemies" width="20" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFowAT7B9oB4wCOBiNCwQAALwqAX8=
   </data>
  </layer>
 </map>
