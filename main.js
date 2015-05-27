@@ -55,7 +55,7 @@ var keyboard = new Keyboard();
 var LAYER_COUNT = 2;
  // number of layers in level
 
-var MAP = {tw:60, th:15}; 
+var MAP = {tw:35, th:15}; 
 // specifies size of the level. (tiles wide  x  tiles high)
 
 var TILE = 35;
@@ -205,6 +205,21 @@ var enemies = [];
 var heartImage = document.createElement("img");
 heartImage.src = "heartImage.png";
 
+function DrawTileLayer(layer)
+{
+        for( var y = 0; y < level1.layers[layer].height;  y++ )
+        {
+                for( var x = 0; x < level1.layers[layer].width;  x++ )
+                {
+                        if(cells[layer][y][x] == 1)
+                        {
+                                context.fillStyle = "#c0c";            
+                                context.fillRect(35*x, 35*y, 35, 35);                  
+                        }
+                }
+        }
+}
+
 function initialize()
 {
 	// add enemies
@@ -311,19 +326,19 @@ function run()
                    hit = true;
             }
       for(var j=0; j<enemies.length; j++)
-   {
-            if(intersects( bullets[i].position.x, bullets[i].position.y, TILE, TILE,
-                  enemies[j].position.x, enemies[j].position.y, TILE, TILE) == true)
-       {
+  //{
+    //        if(intersects( bullets[i].position.x, bullets[i].position.y, TILE, TILE,
+      //            enemies[j].position.x, enemies[j].position.y, TILE, TILE) == true)
+       //{
                     // kill both the bullet and the enemy
-                    enemies.splice(j, 1);
-                    hit = true;
-                   
-                   // increment the player score
-                    score += 1;
-                    break;
-        }
-   }
+         //           enemies.splice(j, 1);
+           //         hit = true;
+             //      
+               //     increment the player score
+                 //   score += 1;
+                   // break;
+       // }
+   //}
    if(hit == true) 
    {
           bullets.splice(i, 1);
@@ -360,7 +375,7 @@ function run()
 	context.fillText("FPS: " + fps, 5, 20, 100);
 }
 
-
+DrawTileLayer(LAYER_PLATFORMS);
 initialize();
 
 //-------------------- Don't modify anything below here

@@ -253,9 +253,4 @@ Player.prototype.draw= function()
 {
 
     this.sprite.draw(context, this.position.x - worldOffsetX, this.position.y);	
-
-	context.save();
-	context.translate(this.x, this.y);
-	//context.rotate(this.rotation);
-	context.restore();
 }

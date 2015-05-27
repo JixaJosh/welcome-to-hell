@@ -58,7 +58,7 @@ level1 =
          "tileheight":70,
          "tilewidth":70
         }],
- "tilewidth":35,
+ "tilewidth":60,
  "version":1,
  "width":20
 }

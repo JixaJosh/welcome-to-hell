@@ -72,6 +72,5 @@ Enemy.prototype.draw= function(dt)
 
     context.save();
     context.translate(this.x, this.y);
-    //context.rotate(this.rotation);
     context.restore();
 }
