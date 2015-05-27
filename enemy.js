@@ -65,7 +65,7 @@ Enemy.prototype.update = function(dt)
         }
 }
 
-Player.prototype.draw= function()
+Enemy.prototype.draw= function(dt)
 {
 
     this.sprite.draw(dt); 
