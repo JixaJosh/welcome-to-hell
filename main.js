@@ -4,6 +4,8 @@ var context = canvas.getContext("2d");
 var startFrameMillis = Date.now();
 var endFrameMillis = Date.now();
 
+
+
 // This function will return the time in seconds since the function 
 // was last called
 // You should only call this function once per frame
@@ -102,6 +104,16 @@ var tileset = document.createElement("img");
 tileset.src = "tileset.png";
 
 
+// let player die if falls of screen
+function cellAtPixelCoord(layer, x,y)
+{
+	if(x<0 || x>SCREEN_WIDTH || y<0)
+	return 1;
+	if(y>SCREEN_HEIGHT)
+	return 0;
+	return cellAtTileCoord(layer, p2t(x), p2t(y));
+};
+
 function cellAtTileCoord(layer, tx, ty)
 {
 	if( tx < 0 || tx >= MAP.tw || ty < 0 )
@@ -190,6 +202,8 @@ var sfxFire;
 var bullets = [];
 var cells = [];
 var enemies = [];
+var heartImage = document.createElement("img");
+heartImage.src = "heartImage.png";
 
 function initialize()
 {
@@ -322,6 +336,12 @@ function run()
      context.font="32px Arial";
      var scoreText = "Score: " + score;
      context.fillText(scoreText, SCREEN_WIDTH -170, 35);
+
+     // life counter
+    for(var i=0; i<lives; i++)
+      {
+           context.drawImage(heartImage, 5 + ((heartImage.width+2)*i), 10);
+      }
 
 		
 	// update the frame counter 

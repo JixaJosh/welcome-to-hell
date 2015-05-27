@@ -68,7 +68,7 @@ Enemy.prototype.update = function(dt)
 Enemy.prototype.draw= function(dt)
 {
 
-    this.sprite.draw(dt); 
+    this.sprite.draw(context, this.position.x - worldOffsetX, this.position.y); 
 
     context.save();
     context.translate(this.x, this.y);
