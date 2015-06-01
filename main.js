@@ -373,9 +373,11 @@ function run()
 	context.fillStyle = "#f00";
 	context.font="14px Arial";
 	context.fillText("FPS: " + fps, 5, 20, 100);
-}
 
 DrawTileLayer(LAYER_PLATFORMS);
+}
+
+
 initialize();
 
 //-------------------- Don't modify anything below here
