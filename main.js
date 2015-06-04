@@ -34,6 +34,8 @@ function getDeltaTime()
 var SCREEN_WIDTH = canvas.width;
 var SCREEN_HEIGHT = canvas.height;
 
+var STATE_GAMEOVER = 0;
+
 var score = 0;
 var lives = 3;
 
@@ -52,7 +54,7 @@ var fpsTime = 0;
 var player = new Player();
 var keyboard = new Keyboard();
 
-var LAYER_COUNT = 2;
+var LAYER_COUNT = 3;
  // number of layers in level
 
 var MAP = {tw:35, th:15}; 
@@ -79,11 +81,11 @@ var TILESET_COUNT_Y = 14;
 var ENEMY_MAXDX = METER * 5; 
 var ENEMY_ACCEL = ENEMY_MAXDX * 2;
 // variables to map the layers in our level
-var LAYER_PLATFORMS = 0;
-var LAYER_LADDERS = 1;
+var LAYER_PLATFORMS = 1;
+var LAYER_LADDERS = 2;
 
-var LAYER_OBJECT_ENEMIES = 2;
-var LAYER_OBJECT_TRIGGERS = 3;
+var LAYER_OBJECT_ENEMIES = 3;
+var LAYER_OBJECT_TRIGGERS = 4;
 // arbitrary choice for 1m
 var METER = TILE;
  // very exaggerated gravity (6x)
@@ -239,21 +241,44 @@ function initialize()
             }
     }  
     
+	 
+   // initialize trigger layer in collision map
+   cells[LAYER_OBJECT_TRIGGERS] = [];    
+   idx = 0;    
+   for(var y = 0; y < level1.layers[LAYER_OBJECT_TRIGGERS].height; y++) 
+   {        
+           cells[LAYER_OBJECT_TRIGGERS][y] = [];
+           for(var x = 0; x < level1.layers[LAYER_OBJECT_TRIGGERS].width; x++) 
+           {
+                 if(level1.layers[LAYER_OBJECT_TRIGGERS].data[idx] != 0) 
+               {
+                        cells[LAYER_OBJECT_TRIGGERS][y][x] = 1;  
+                        cells[LAYER_OBJECT_TRIGGERS][y-1][x] = 1;    
+                        cells[LAYER_OBJECT_TRIGGERS][y-1][x+1] = 1;  
+                        cells[LAYER_OBJECT_TRIGGERS][y][x+1] = 1;    
+               }               
+                  else if(cells[LAYER_OBJECT_TRIGGERS][y][x] != 1) 
+                  {
+                            // if we haven't set this cell's value, then set it to 0 now
+                          cells[LAYER_OBJECT_TRIGGERS][y][x] = 0;                     
+                  }
+                   idx++;
+             }
+     }
 	
-
-	for(var layerIdx = 0; layerIdx < LAYER_COUNT; layerIdx++) // initializes the collision map
+  for(var layerIdx = 0; layerIdx < LAYER_COUNT; layerIdx++) // initializes the collision map
 	{
 		cells[layerIdx] = [];
 		var idx = 0;
-		for(var y = 0; y < level1.layers[layerIdx].height; y++)
+  	for(var y = 0; y < level1.layers[layerIdx].height; y++)
 		{
 			cells[layerIdx][y] = [];
 			for(var x = 0; x < level1.layers[layerIdx].width; x++)
 			{
 				if(level1.layers[layerIdx].data[idx] != 0)
-					// for each tile we find in the layer data, we need to create 4 collisions
- 					// (because our collision squares are 35x35 but the tile in the
-					// level are 70x70)
+					 //for each tile we find in the layer data, we need to create 4 collisions
+ 					 //(because our collision squares are 35x35 but the tile in the
+					 //level are 70x70)
 				{
 					cells[layerIdx][y][x] = 1;
 					cells[layerIdx][y-1][x] = 1;
@@ -350,12 +375,12 @@ function run()
      context.fillStyle = "black";
      context.font="32px Arial";
      var scoreText = "Score: " + score;
-     context.fillText(scoreText, SCREEN_WIDTH -170, 35);
+     context.fillText(scoreText, SCREEN_WIDTH - 140, 35);
 
      // life counter
     for(var i=0; i<lives; i++)
       {
-           context.drawImage(heartImage, 5 + ((heartImage.width+2)*i), 10);
+           context.drawImage(heartImage, 20 + ((heartImage.width+2)*i), 10);
       }
 
 		
@@ -374,12 +399,21 @@ function run()
 	context.font="14px Arial";
 	context.fillText("FPS: " + fps, 5, 20, 100);
 
-DrawTileLayer(LAYER_PLATFORMS);
+//DrawTileLayer(LAYER_PLATFORMS);
 }
 
 
 initialize();
 
+var gameState = STATE_GAMEOVER;
+
+function runGameOver(deltaTime)
+
+{
+  context.fillStyle = "red";
+    context.font="24px snap ITC";
+    context.fillText("GAME OVER MAN GAME OVER", 60, 240);
+}
 //-------------------- Don't modify anything below here
 
 

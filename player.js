@@ -55,6 +55,13 @@ var ANIM_SHOOT_RIGHT = 8;
 var ANIM_MAX = 9;
 
 
+function runGameOver(deltaTime)
+
+{
+  context.fillStyle = "red";
+    context.font="24px snap ITC";
+    context.fillText("GAME OVER MAN GAME OVER", 60, 240);
+}
 
 Player.prototype.update= function(deltaTime)
 {
@@ -246,6 +253,17 @@ Player.prototype.update= function(deltaTime)
 			this.velocity.x = 0;    // stops horizontal velocity
 		}
 	}
+
+        if(cellAtTileCoord(LAYER_OBJECT_TRIGGERS, tx, ty) == true)
+     {
+          // game over man, game over
+          switch(gameState)
+          {
+             case STATE_GAMEOVER:
+               runGameOver(deltaTime);
+               break;
+          }
+     }
 }
 
 
