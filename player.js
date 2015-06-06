@@ -56,13 +56,21 @@ var ANIM_MAX = 9;
 
 
 function runGameOver(deltaTime)
+{
+for(var y=0; y<15; y++)
+{
+         for(var x=0; x<20; x++)
+        {
+                context.drawImage(background[y][x], x*32, y*32);
+        }
+}
 
 {
   context.fillStyle = "red";
     context.font="24px snap ITC";
     context.fillText("GAME OVER MAN GAME OVER", 60, 240);
 }
-
+}
 Player.prototype.update= function(deltaTime)
 {
    
