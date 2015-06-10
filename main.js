@@ -47,6 +47,8 @@ for(var y=0;y<15;y++)
 var SCREEN_WIDTH = canvas.width;
 var SCREEN_HEIGHT = canvas.height;
 
+
+var gameState = STATE_GAME;
 var STATE_GAME = 0;
 var STATE_GAMEOVER = 1;
 
@@ -97,7 +99,6 @@ var ENEMY_ACCEL = ENEMY_MAXDX * 2;
 // variables to map the layers in our level
 var LAYER_PLATFORMS = 1;
 var LAYER_LADDERS = 2;
-
 var LAYER_OBJECT_ENEMIES = 3;
 var LAYER_OBJECT_TRIGGERS = 4;
 // arbitrary choice for 1m
@@ -348,6 +349,7 @@ switch(gameState)
       break;
       
   }
+}
   //switch(gameState)
  // {
   //  case STATE_GAMEOVER:
@@ -358,7 +360,8 @@ switch(gameState)
 {
 	drawMap();
 	player.draw();
-	var hit=false;
+	
+  var hit=false;
   for(var i=0; i<bullets.length; i++)
     {
       bullets[i].update(deltaTime);
@@ -468,7 +471,7 @@ switch(gameState)
 
 initialize();
 
-var gameState = STATE_GAMEOVER;
+
 
 function runGameOver(deltaTime)
 {
