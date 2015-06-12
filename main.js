@@ -48,9 +48,9 @@ var SCREEN_WIDTH = canvas.width;
 var SCREEN_HEIGHT = canvas.height;
 
 
-var gameState = STATE_GAME;
 var STATE_GAME = 0;
 var STATE_GAMEOVER = 1;
+var gameState = STATE_GAME;
 
 var score = 0;
 var lives = 3;
