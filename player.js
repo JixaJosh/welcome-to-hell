@@ -248,15 +248,13 @@ Player.prototype.update= function(deltaTime)
 	}
 
         if(cellAtTileCoord(LAYER_OBJECT_TRIGGERS, tx, ty) == true)
-     {
-          // game over man, game over
-          switch(gameState)
-          {
-             case STATE_GAMEOVER:
-               runGameOver(deltaTime);
-               break;
+     
+          // game
+          { 
+             gameState = STATE_GAMEOVER:
+               
           }
-     }
+     
 }
 
 
