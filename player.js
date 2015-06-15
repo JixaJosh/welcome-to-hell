@@ -251,7 +251,8 @@ Player.prototype.update= function(deltaTime)
      
           // game
           { 
-             gameState = STATE_GAMEOVER:
+             gameState = STATE_GAMEOVER;
+
                
           }
      
