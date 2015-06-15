@@ -52,7 +52,7 @@ var STATE_GAME = 0;
 var STATE_GAMEOVER = 1;
 var gameState = STATE_GAME;
 
-var score = 100;
+var score = 10;
 var lives = 3;
 
 
@@ -412,7 +412,7 @@ switch(gameState)
     if(KEY_UP == true)
     {
       score -=1;
-      break;
+      //break;
     }
    }
 
