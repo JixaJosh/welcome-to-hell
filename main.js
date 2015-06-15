@@ -52,7 +52,7 @@ var STATE_GAME = 0;
 var STATE_GAMEOVER = 1;
 var gameState = STATE_GAME;
 
-var score = 0;
+var score = 100;
 var lives = 3;
 
 
@@ -351,6 +351,7 @@ function run()
 	context.fillStyle = "#ccc";		
 	context.fillRect(0, 0, canvas.width, canvas.height);
 	
+  var deltaTime = getDeltaTime();
 	player.update(deltaTime);
 
 switch(gameState)
@@ -370,6 +371,7 @@ switch(gameState)
   //         runGameOver(deltaTime);
   //         break;
  // }
+ var KEY_UP = 38;
 	function runGame(deltaTime)
 {
 	drawMap();
@@ -403,9 +405,17 @@ switch(gameState)
         bullets.splice(i, 1);
         break;
       }
-      
+
     }
     
+   {
+    if(KEY_UP == true)
+    {
+      score -=1;
+      break;
+    }
+   }
+
   for(var j=0; j<enemies.length; j++)
     {
       if(player.isDead == false)
