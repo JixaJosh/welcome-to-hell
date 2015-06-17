@@ -371,6 +371,7 @@ switch(gameState)
   //         runGameOver(deltaTime);
   //         break;
  // }
+ var scoreCount = 0;
  var KEY_UP = 38;
 	function runGame(deltaTime)
 {
@@ -411,7 +412,7 @@ switch(gameState)
    {
     if(KEY_UP == true)
     {
-      score -=1;
+      score -= 1;
       //break;
     }
    }
@@ -441,6 +442,14 @@ switch(gameState)
          }
 
 
+  score += scoreCount;
+  scoreCount++;
+  if(score >= 10)
+  {
+    score -= 1;
+    score = scoreCount;
+    scoreCount = 0;
+  }
 
 	// score
      context.fillStyle = "black";
