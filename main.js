@@ -371,8 +371,8 @@ switch(gameState)
   //         runGameOver(deltaTime);
   //         break;
  // }
- 
- var jump = false;
+ var KEY_UP = 38
+ var jump = KEY_UP;
  var newKeyUpstate = false;
  var oldKeyUpstate = false;
 	function runGame(deltaTime)
@@ -437,9 +437,11 @@ switch(gameState)
                 enemies[i].draw(deltaTime);
          }
 
+ 
+
   oldKeyUpstate = newKeyUpstate;
 
-  if (jump == true)
+  if (player.jump == true)
   {
       newKeyUpstate = true;
   }
