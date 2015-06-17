@@ -371,8 +371,10 @@ switch(gameState)
   //         runGameOver(deltaTime);
   //         break;
  // }
- var scoreCount = 0;
- var KEY_UP = 38;
+ 
+ var jump = false;
+ var newKeyUpstate = false;
+ var oldKeyUpstate = false;
 	function runGame(deltaTime)
 {
 	drawMap();
@@ -409,13 +411,7 @@ switch(gameState)
 
     }
     
-   {
-    if(KEY_UP == true)
-    {
-      score -= 1;
-      //break;
-    }
-   }
+  
 
   for(var j=0; j<enemies.length; j++)
     {
@@ -441,16 +437,22 @@ switch(gameState)
                 enemies[i].draw(deltaTime);
          }
 
+  oldKeyUpstate = newKeyUpstate;
 
-  score += scoreCount;
-  scoreCount++;
-  if(score >= 10)
+  if (jump == true)
   {
-    score -= 1;
-    score = scoreCount;
-    scoreCount = 0;
+      newKeyUpstate = true;
+  }
+  else
+  {
+       newKeyUpstate = false;
   }
 
+  if (newKeyUpstate == true && oldKeyUpstate == false)
+  {
+       score -= 1;
+  }
+  
 	// score
      context.fillStyle = "black";
      context.font="32px Arial";
