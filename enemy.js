@@ -65,12 +65,12 @@ Enemy.prototype.update = function(dt)
         }
 }
 
-Enemy.prototype.draw= function(dt)
+Enemy.prototype.draw= function()
 {
 
     this.sprite.draw(context, this.position.x - worldOffsetX, this.position.y); 
 
-    context.save();
-    context.translate(this.x, this.y);
-    context.restore();
+   // context.save();
+   // context.translate(this.x, this.y);
+   // context.restore();
 }
